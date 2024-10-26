@@ -147,14 +147,26 @@ public class EnlazadoArbolBinario<E> implements ArbolBinario<E> {
         if(arbol.esVacio() == true){
             return false;
         }
-        else if(camino.length()==0){
+         if(camino.length()==0){
             return false;
         }
-        else if(arbol.raiz().equals(camino)){
-            if(esCamino(arbol.hijoIzq(), camino) || esCamino(arbol.hijoDer(), camino)){
-                return true;
-            }
-        }
+        
+        // !!Condición de finalización: si el camino tiene solo un carácter y coincide con la raíz
+        if(camino.length()==1 && arbol.raiz().equals(camino.charAt(0))){
+            return true;
+                }
+
+         // Si el primer carácter de 'camino' no coincide con la raíz actual, no hay camino
+    if (!arbol.raiz().equals(camino.charAt(0))) {
+        return false;
+    }
+        
+       String subCamino = camino.substring(1);
+
+    return (arbol.hijoIzq() != null && esCamino(arbol.hijoIzq(), subCamino)) || arbol.hijoDer() != null && esCamino(arbol.hijoDer(),subCamino);
+
+
+        
         return false;
     }
     
